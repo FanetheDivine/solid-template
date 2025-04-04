@@ -25,6 +25,7 @@
 - `zod` 类型校验
 - `dayjs` 日期时间库
 - `solidjs-use` 实用函数
+- `lodash-es` 实用函数
 
 ## 杂项
 
