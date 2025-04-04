@@ -1,0 +1,17 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.quickSuggestionsDelay": 0,
+  "editor.parameterHints.enabled": false,
+  "editor.autoClosingBrackets": "always",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "index.html": "index.*",
+    "README.md": "LICENSE,*.md",
+    "vite.config.ts": "vite.*",
+    "package.json": "pnpm-lock.yaml,tsconfig.json,.prettierrc,.gitignore,[^(vite)]config.*"
+  }
+}
