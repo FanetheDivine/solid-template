@@ -8,7 +8,6 @@
 - `components` `utils` `api`下的文件不会被视为路由
 - `/about/index.tsx`或`/about.tsx`-> `/about`
 - `/[id].tsx`或`/[id]/index.tsx`-> `/:id`
-- `[..arr]`捕获剩余的路径参数 不能匹配无路径参数的情况 `[...arr]`则可以
 - 没有嵌套路由
 
 ## 组件库
