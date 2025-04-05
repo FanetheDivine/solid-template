@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write src/"
+    "prettier": "prettier --write src/",
+    "prepare": "husky"
   },
   "license": "MIT",
   "dependencies": {
@@ -16,6 +17,7 @@
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22.14.0",
     "clsx": "^2.1.1",
+    "commitlint": "^19.8.0",
     "cui-solid": "^2.1.6",
     "cui-solid-icons": "^1.0.9",
     "dayjs": "^1.11.13",
