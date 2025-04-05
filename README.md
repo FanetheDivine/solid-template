@@ -25,6 +25,7 @@
 - `dayjs` 日期时间库
 - `solidjs-use` 实用函数
 - `lodash-es` 实用函数
+- `solid-zustand` 全局状态管理 改为使用`createWithSignal`即可
 
 ## 杂项
 
