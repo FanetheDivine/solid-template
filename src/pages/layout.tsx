@@ -1,10 +1,8 @@
-import { Route } from '@solidjs/router'
+import { ErrorBoundary, ParentComponent } from 'solid-js'
+import Error from './error'
 
-export default function Layout() {
-  console.log(1)
-  return (
-    <div class='flex flex-col min-h-screen'>
-      <Route></Route>
-    </div>
-  )
+const Layout: ParentComponent = (props) => {
+  return <>layout {props.children}</>
 }
+
+export default Layout

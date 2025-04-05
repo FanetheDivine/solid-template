@@ -26,6 +26,9 @@ importers:
       '@types/node':
         specifier: ^22.14.0
         version: 22.14.0
+      async-validator:
+        specifier: ^4.2.5
+        version: 4.2.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -823,6 +826,9 @@ packages:
 
   array-ify@1.0.0:
     resolution: {integrity: sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==}
+
+  async-validator@4.2.5:
+    resolution: {integrity: sha512-7HhHjtERjqlNbZtqNqy2rckN/SpOOlmDliet+lP7k+eKZEjPk3DgyeU9lIXLdeLz0uBbbVp+9Qdow9wJWgwwfg==}
 
   babel-plugin-jsx-dom-expressions@0.37.13:
     resolution: {integrity: sha512-oAEMMIgU0h1DmHn4ZDaBBFc08nsVJciLq9pF7g0ZdpeIDKfY4zXjXr8+/oBjKhXG8nyomhnTodPjeG+/ZXcWXQ==}
@@ -2332,6 +2338,8 @@ snapshots:
   argparse@2.0.1: {}
 
   array-ify@1.0.0: {}
+
+  async-validator@4.2.5: {}
 
   babel-plugin-jsx-dom-expressions@0.37.13(@babel/core@7.23.7):
     dependencies:

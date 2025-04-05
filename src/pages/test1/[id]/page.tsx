@@ -1,9 +1,9 @@
+import { Component } from 'solid-js'
 import { useParams } from '@solidjs/router'
 
-const Page = () => {
+const Page: Component = () => {
   const params = useParams()
-  console.log(params)
-  return <div>test1</div>
+  return 'id:' + params.id
 }
 
 export default Page

@@ -1,10 +1,43 @@
 /* @refresh reload */
-import { render, Suspense } from 'solid-js/web'
+import { ParentProps } from 'solid-js'
+import { render, Suspense, ErrorBoundary } from 'solid-js/web'
 import { Router } from '@solidjs/router'
 import 'cui-solid/dist/styles/cui.css'
-import routes from '~solid-pages'
+import getRouteMap from '~solid-pages'
 import './index.css'
 
+function convertRoutesMap(routeMap: any[]) {
+  routeMap.forEach((item) => {
+    if (item.isWrapper) {
+      const { Loading, Error, Layout } = item.component
+      item.component = (props: ParentProps) => {
+        let res = null
+        if (Loading) {
+          res = () => (
+            <Suspense fallback={<Loading />}>{props.children}</Suspense>
+          )
+        }
+        if (Error) {
+          res = (
+            <ErrorBoundary
+              fallback={(err, reset) => <Error err={err} reset={reset} />}
+            >
+              {res ? res() : props.children}
+            </ErrorBoundary>
+          )
+        }
+        if (Layout) {
+          res = <Layout>{res ?? props.children}</Layout>
+        }
+        return res
+      }
+    }
+    if (item.children) convertRoutesMap(item.children)
+  })
+  return routeMap
+}
+
+const routes = convertRoutesMap(getRouteMap())
 console.log(routes)
 const root = document.getElementById('root')
 
@@ -14,11 +47,4 @@ if (import.meta.env.DEV && !(root instanceof HTMLElement)) {
   )
 }
 
-render(
-  () => (
-    <Router root={(props) => <Suspense>{props.children}</Suspense>}>
-      {routes}
-    </Router>
-  ),
-  root!,
-)
+render(() => <Router>{routes}</Router>, root!)

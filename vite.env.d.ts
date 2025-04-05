@@ -1,2 +1,5 @@
 /// <reference types="vite/client" />
-/// <reference types="vite-plugin-pages/client-solid" />
+declare module '~solid-pages' {
+  const res: any
+  export default res
+}

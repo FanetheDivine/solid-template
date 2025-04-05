@@ -16,6 +16,7 @@
     "@tailwindcss/vite": "^4.0.7",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^22.14.0",
+    "async-validator": "^4.2.5",
     "clsx": "^2.1.1",
     "commitlint": "^19.8.0",
     "cui-solid": "^2.1.6",
