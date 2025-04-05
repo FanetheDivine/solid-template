@@ -10,4 +10,5 @@ body,
   border: 0;
   transform: none;
   position: relative;
+  overflow: hidden;
 }
