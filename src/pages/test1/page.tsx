@@ -1,7 +1,8 @@
 import { Component } from 'solid-js'
+import { A } from '@solidjs/router'
 
 const Page: Component = () => {
-  return 'test1'
+  return <A href='/'>to home</A>
 }
 
 export default Page
