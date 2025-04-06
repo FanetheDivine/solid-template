@@ -18,18 +18,20 @@ function convertRoutesMap(routeMap: any[]) {
           )
         }
         if (Error) {
-          res = (
+          const _res = res
+          res = () => (
             <ErrorBoundary
               fallback={(err, reset) => <Error err={err} reset={reset} />}
             >
-              {res ? res() : props.children}
+              {_res ? _res() : props.children}
             </ErrorBoundary>
           )
         }
         if (Layout) {
-          res = <Layout>{res ?? props.children}</Layout>
+          const _res = res
+          res = () => <Layout>{_res ? _res() : props.children}</Layout>
         }
-        return res
+        return res?.()
       }
     }
     if (item.children) convertRoutesMap(item.children)

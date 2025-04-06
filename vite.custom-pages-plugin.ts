@@ -252,17 +252,6 @@ function convertStringRouteComponentWrapper(
     const { layout, error, loading } = route.component
     if (!layout && !error && !loading) return null
     const mode = getImportMode(route)
-    // let code = 'props.children'
-    // if (loading) {
-    //   code = `createComponent(Suspense,{fallback:createComponent(${convertImportCode(mode, loading, routeImports)},{}),children:${code}})`
-    // }
-    // if (error) {
-    //   code = `createComponent(ErrorBoundary,{fallback:(err,reset)=>createComponent(${convertImportCode(mode, error, routeImports)},{err,reset}),children: ${code}})`
-    // }
-    // if (layout) {
-    //   code = `createComponent(${convertImportCode(mode, layout, routeImports)},{children:${code}})`
-    // }
-    // return `component:(props)=>${code}`
     const codes = []
     if (layout) {
       codes.push(`Layout:${convertImportCode(mode, layout, routeImports)}`)
@@ -273,6 +262,7 @@ function convertStringRouteComponentWrapper(
     if (loading) {
       codes.push(`Loading:${convertImportCode(mode, loading, routeImports)}`)
     }
+    // 把组装工作留到外部
     return `isWrapper:true,component:{${codes.join(',')}}`
   }
 }

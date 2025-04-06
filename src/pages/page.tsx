@@ -1,4 +1,5 @@
 import { Component, createResource } from 'solid-js'
+import { A } from '@solidjs/router'
 import { Button } from 'cui-solid'
 import { absoluteCenter } from '@/styles'
 import { cn } from '@/utils/classnames'
@@ -12,13 +13,18 @@ const Page: Component = () => {
     return ++num
   })
   return (
-    <Button
-      type='primary'
-      onClick={refetch}
-      class={cn(absoluteCenter, 'bg-black')}
-    >
-      点击loading{data()}
-    </Button>
+    <>
+      <Button
+        type='primary'
+        onClick={refetch}
+        class={cn(absoluteCenter, 'bg-black')}
+      >
+        点击loading{data()}
+      </Button>
+      <A href='/test1'>
+        <Button type='primary'>to test1</Button>
+      </A>
+    </>
   )
 }
 export default Page
