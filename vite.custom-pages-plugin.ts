@@ -204,7 +204,6 @@ function convertStringRoute(route: Route, routeImports: RouteImports): string {
 
 /** 将一项路由的children转化为JS代码 */
 function convertStringRouteChildren(route: Route, routeImports: RouteImports) {
-  if (route.children.length === 0) return null
   return `children:${convertStringRoutes(route.children, routeImports).stringRoutes}`
 }
 

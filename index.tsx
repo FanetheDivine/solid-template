@@ -7,7 +7,6 @@ import './index.css'
 
 function getRoutes(): RouteDefinition[] {
   function convertRouteMap(routeMap: RouteMap): RouteDefinition[] {
-    if (!routeMap) return []
     const res = routeMap.map((item) => {
       return {
         path: item.path,
