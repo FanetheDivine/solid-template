@@ -159,7 +159,7 @@ function getPathFromDirName(dirName: string): {
   if (dirName === '[...]') return { path: '*rest', pathType: 'rest' }
   // [id] => :id
   const res = /^\[(.+)\]$/.exec(dirName)
-  if (res?.[1]) return { path: `:${res[1]}?`, pathType: 'dynamic' }
+  if (res?.[1]) return { path: `:${res[1]}`, pathType: 'dynamic' }
   return { path: dirName, pathType: 'common' }
 }
 
