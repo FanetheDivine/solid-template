@@ -101,13 +101,24 @@ type Route = {
   /** 剩余参数、动态参数、静态参数 */
   pathType: 'rest' | 'dynamic' | 'common'
   children: Route[]
-  type: 'wrapper' | 'page' | '404'
+  type: 'wrapper' | 'page' | '404' | 'rest'
   components: Map<string, string>
 }
 
 /** 根据文件结构创建路由 */
 function getRoutesFromFileStructure(fileStructure: Directory) {
   const { path, pathType } = getPathFromDirName(fileStructure.dirName)
+  if (pathType === 'rest') {
+    // 剩余参数直接在本级设置组件
+    const route: Route = {
+      path,
+      pathType,
+      type: 'rest',
+      components: fileStructure.files,
+      children: [],
+    }
+    return route
+  }
   const route: Route = {
     path,
     pathType,
@@ -217,6 +228,8 @@ function convertStringRouteComponent(route: Route, routeImports: RouteImports) {
         return ['loading', 'page']
       case '404':
         return ['404']
+      case 'rest':
+        return ['layout', 'error', 'loading', 'page']
     }
   })()
   const mode = getImportMode(route)
