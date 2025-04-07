@@ -1,4 +1,10 @@
+@layer theme, base, cui, components, utilities;
+
 @import 'tailwindcss';
+
+@layer cui {
+  @import 'cui-solid/dist/styles/cui.css';
+}
 
 html,
 body,

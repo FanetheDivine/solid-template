@@ -2,7 +2,6 @@
 import { Component } from 'solid-js'
 import { render, Suspense, ErrorBoundary } from 'solid-js/web'
 import { RouteDefinition, Router } from '@solidjs/router'
-import 'cui-solid/dist/styles/cui.css'
 import routeMap, { type RouteMap } from '~solid-pages'
 import './index.css'
 
