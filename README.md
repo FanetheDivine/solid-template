@@ -26,14 +26,14 @@
       <ErrorBoundary
         fallback={(err, reset) => <Error err={err} reset={reset}></Error>}
       >
-        <Suspense fallback={<Loading></Loading>}>{props.children}</Suspense>
+        {props.children}
       </ErrorBoundary>
     </Layout>
   ),
   children: [
     {
       path: '',
-      component: Page,
+      component: <Suspense fallback={<Loading></Loading>}><Page/></Suspense>,
     },
     //..其他的下级路由
     {

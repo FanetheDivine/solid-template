@@ -1,5 +1,8 @@
 import Pages, { PageContext } from 'vite-plugin-pages'
 
+/** 把生成的文件打印到控制台 */
+const ConsoleResult = false
+
 const legalFileNames = ['page', '404', 'loading', 'error', 'layout']
 
 const getComputedRoutes = (ctx: PageContext) => {
@@ -40,13 +43,11 @@ const resolveRoutes = (ctx: PageContext) => {
   const codes = [
     ...baseImport,
     ...importCodes,
-    `function getRoutes(){`,
-    `const routes = ${stringRoutes};`,
-    `return routes;`,
-    `}`,
-    'export default getRoutes',
+    `const routeMap = ${stringRoutes};`,
+    'export default routeMap',
   ]
   const fileContent = codes.join('\n')
+  if (ConsoleResult) console.log(fileContent)
   return fileContent
 }
 export const CustomPagesPlugin = Pages({
@@ -100,31 +101,10 @@ type Route = {
   /** 剩余参数、动态参数、静态参数 */
   pathType: 'rest' | 'dynamic' | 'common'
   children: Route[]
-} & (
-  | {
-      /** layout error 和 loading */
-      type: 'wrapper'
-      component: {
-        layout?: string
-        error?: string
-        loading?: string
-      }
-    }
-  | {
-      /** page */
-      type: 'page'
-      component: {
-        page?: string
-      }
-    }
-  | {
-      /** 404 */
-      type: '404'
-      component: {
-        '404'?: string
-      }
-    }
-)
+  type: 'wrapper' | 'page' | '404'
+  components: Map<string, string>
+}
+
 /** 根据文件结构创建路由 */
 function getRoutesFromFileStructure(fileStructure: Directory) {
   const { path, pathType } = getPathFromDirName(fileStructure.dirName)
@@ -132,11 +112,7 @@ function getRoutesFromFileStructure(fileStructure: Directory) {
     path,
     pathType,
     type: 'wrapper',
-    component: {
-      layout: fileStructure.files.get('layout'),
-      error: fileStructure.files.get('error'),
-      loading: fileStructure.files.get('loading'),
-    },
+    components: fileStructure.files,
     children: [],
   }
 
@@ -145,7 +121,7 @@ function getRoutesFromFileStructure(fileStructure: Directory) {
       path: '',
       pathType: 'common',
       type: 'page',
-      component: { page: fileStructure.files.get('page') },
+      components: fileStructure.files,
       children: [],
     })
   }
@@ -169,7 +145,7 @@ function getRoutesFromFileStructure(fileStructure: Directory) {
       path: '*rest',
       pathType: 'rest',
       type: '404',
-      component: { 404: fileStructure.files.get('404') },
+      components: fileStructure.files,
       children: [],
     })
   }
@@ -234,59 +210,25 @@ function convertStringRouteChildren(route: Route, routeImports: RouteImports) {
 
 /** 将一项路由的component转化为JS代码 */
 function convertStringRouteComponent(route: Route, routeImports: RouteImports) {
-  switch (route.type) {
-    case 'wrapper':
-      return convertStringRouteComponentWrapper(route, routeImports)
-    case 'page':
-      return convertStringRouteComponentPage(route, routeImports)
-    case '404':
-      return convertStringRouteComponent404(route, routeImports)
-  }
-}
-
-function convertStringRouteComponentWrapper(
-  route: Route,
-  routeImports: RouteImports,
-) {
-  if (route.type === 'wrapper') {
-    const { layout, error, loading } = route.component
-    if (!layout && !error && !loading) return null
-    const mode = getImportMode(route)
-    const codes = []
-    if (layout) {
-      codes.push(`Layout:${convertImportCode(mode, layout, routeImports)}`)
+  const componentKeys = (() => {
+    switch (route.type) {
+      case 'wrapper':
+        return ['layout', 'error']
+      case 'page':
+        return ['loading', 'page']
+      case '404':
+        return ['404']
     }
-    if (error) {
-      codes.push(`Error:${convertImportCode(mode, error, routeImports)}`)
-    }
-    if (loading) {
-      codes.push(`Loading:${convertImportCode(mode, loading, routeImports)}`)
-    }
-    // 把组装工作留到外部
-    return `isWrapper:true,component:{${codes.join(',')}}`
-  }
-}
-function convertStringRouteComponentPage(
-  route: Route,
-  routeImports: RouteImports,
-) {
-  if (route.type === 'page') {
-    const filePath = route.component['page']
-    if (!filePath) return null
-    const mode = getImportMode(route)
-    return `component:${convertImportCode(mode, filePath, routeImports)}`
-  }
-}
-function convertStringRouteComponent404(
-  route: Route,
-  routeImports: RouteImports,
-) {
-  if (route.type === '404') {
-    const filePath = route.component['404']
-    if (!filePath) return null
-    const mode = getImportMode(route)
-    return `component:${convertImportCode(mode, filePath, routeImports)}`
-  }
+  })()
+  const mode = getImportMode(route)
+  const components = componentKeys
+    .map((key) => ({ key, filePath: route.components.get(key) }))
+    .filter((item) => item.filePath)
+    .map(
+      (item) =>
+        `{key:'${item.key}',value: ${convertImportCode(mode, item.filePath!, routeImports)}}`,
+    )
+  return `components:[${components.join(',')}]`
 }
 
 type ImportMode = 'sync' | 'async'

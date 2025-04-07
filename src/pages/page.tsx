@@ -5,8 +5,9 @@ import { absoluteCenter } from '@/styles'
 import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 
-const Page: Component = () => {
-  throw new Error('a')
+const Page: Component = (props) => {
+  debugger
+  // throw new Error('a')
   let num = 1
   const [data, { refetch }] = createResource(async () => {
     await sleep(2000)
