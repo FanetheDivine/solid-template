@@ -6,7 +6,7 @@ import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 
 const Page: Component = (props) => {
-  // throw new Error('a')
+  throw new Error('a')
   let num = 1
   const [data, { refetch }] = createResource(async () => {
     await sleep(2000)
