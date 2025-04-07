@@ -33,7 +33,11 @@
   children: [
     {
       path: '',
-      component: <Suspense fallback={<Loading></Loading>}><Page/></Suspense>,
+      component: (props) => (
+        <Suspense fallback={<Loading></Loading>}>
+          <Page>{props.children}</Page>
+        </Suspense>
+      )
     },
     //..其他的下级路由
     {
