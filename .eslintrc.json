@@ -1,0 +1,14 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["solid"],
+  "rules": {
+    "solid/jsx-no-duplicate-props": 2,
+    "solid/no-innerhtml": 2,
+    "solid/jsx-no-script-url": 2,
+    "solid/components-return-once": 2,
+    "solid/no-destructure": 2,
+    "solid/prefer-for": 2,
+    "solid/reactivity": 2,
+    "solid/prefer-show": 2
+  }
+}

@@ -28,3 +28,5 @@ const Page: Component = (props) => {
   )
 }
 export default Page
+
+const Text: Component<{ value: string }> = (props) => props.value
