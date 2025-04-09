@@ -5,15 +5,25 @@ import dtsPlugin from 'vite-plugin-dts'
 // @ts-ignore
 import eslintPlugin from 'vite-plugin-eslint'
 import solidPlugin from 'vite-plugin-solid'
+import pkg from './package.json'
 import { CustomPagesPlugin } from './vite.custom-pages-plugin'
+
+const excludeDeps = Object.keys(pkg.dependencies)
+// .filter(
+//   (dep) => !['solid-js', 'solid-element'].includes(dep),
+// )
+const files = ['box', 'rect'].map((s) => `src/components/leafer-${s}/index.tsx`)
 
 export default defineConfig({
   plugins: [
     CustomPagesPlugin,
     eslintPlugin(),
-    dtsPlugin({ include: ['src/components/'] }),
     solidPlugin(),
     tailwindcss(),
+    dtsPlugin({
+      include: ['src/components'],
+      outDir: 'leafer-component',
+    }),
   ],
   server: {
     port: 3000,
@@ -21,14 +31,27 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    lib: {
+      entry: files,
+      name: 'LeaferComponent',
+      fileName: 'leafer-component',
+    },
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'src/components/leafer-rect/index.tsx'),
-      },
+      external: excludeDeps,
+      input: files,
       output: {
-        entryFileNames: '[name].js',
-        dir: resolve(__dirname, '_components'),
+        entryFileNames: (args) => {
+          return args
+            .facadeModuleId!.replace(
+              '/workspaces/solid-template/src/components/',
+              '',
+            )
+            .replace('tsx', 'js')
+        },
+        dir: 'leafer-component',
         format: 'es',
+        preserveModules: false,
+        // preserveModulesRoot,
       },
     },
   },

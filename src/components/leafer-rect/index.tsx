@@ -1,9 +1,15 @@
 import { customElement } from 'solid-element'
 
-type LeaferRectProps = {
+export type LeaferBoxProps = {
   text: string
 }
 
-customElement<LeaferRectProps>('leafer-rect', { text: '' }, (props) => {
-  return <>{props.text}</>
+customElement('leafer-box', { text: '' }, (props) => {
+  return <>leafer-box-{props.text}</>
 })
+
+export namespace JSX {
+  export interface IntrinsicElements {
+    'leafer-box': LeaferBoxProps
+  }
+}

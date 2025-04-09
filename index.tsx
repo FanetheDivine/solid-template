@@ -3,7 +3,6 @@ import { Component } from 'solid-js'
 import { render, Suspense, ErrorBoundary } from 'solid-js/web'
 import { RouteDefinition, Router } from '@solidjs/router'
 import routeMap, { type RouteMap } from '~solid-pages'
-import './_components/main.js'
 import './index.css'
 
 function getRoutes(): RouteDefinition[] {
