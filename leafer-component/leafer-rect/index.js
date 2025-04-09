@@ -1,1 +1,1 @@
-"use strict";const t=require("solid-element"),r=require("solid-js");t.customElement("leafer-box",{text:""},e=>["leafer-box-",r.createMemo(()=>e.text)]);
+"use strict";const e=require("../index-BO02tBvp.cjs");e.customElement("leafer-box",{text:""},t=>["leafer-box-",e.createMemo(()=>t.text)]);

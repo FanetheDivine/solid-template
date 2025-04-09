@@ -8,10 +8,9 @@ import solidPlugin from 'vite-plugin-solid'
 import pkg from './package.json'
 import { CustomPagesPlugin } from './vite.custom-pages-plugin'
 
-const excludeDeps = Object.keys(pkg.dependencies)
-// .filter(
-//   (dep) => !['solid-js', 'solid-element'].includes(dep),
-// )
+const excludeDeps = Object.keys(pkg.dependencies).filter(
+  (dep) => !['solid-js', 'solid-element'].includes(dep),
+)
 const files = ['box', 'rect'].map((s) => `src/components/leafer-${s}/index.tsx`)
 
 export default defineConfig({
