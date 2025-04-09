@@ -6,14 +6,14 @@ import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 
 const Page: Component = (props) => {
-  throw new Error('a')
   let num = 1
   const [data, { refetch }] = createResource(async () => {
-    await sleep(2000)
+    // await sleep(2000)
     return ++num
   })
   return (
     <>
+      <leafer-rect text={data()}></leafer-rect>
       <Button
         type='primary'
         onClick={refetch}
@@ -28,5 +28,3 @@ const Page: Component = (props) => {
   )
 }
 export default Page
-
-const Text: Component<{ value: string }> = (props) => props.value
