@@ -8,11 +8,11 @@ import solidPlugin from 'vite-plugin-solid'
 import pkg from './package.json'
 import { CustomPagesPlugin } from './vite.custom-pages-plugin'
 
-const excludeDeps = Object.keys(pkg.dependencies).filter(
-  (dep) => !['solid-js', 'solid-element'].includes(dep),
+const excludeDeps = Object.keys(pkg.dependencies)
+const files = ['box', 'rect'].map(
+  (s) => `src/leafer-component/leafer-${s}/index.tsx`,
 )
-const files = ['box', 'rect'].map((s) => `src/components/leafer-${s}/index.tsx`)
-
+files.push(`src/leafer-component/index.ts`)
 export default defineConfig({
   plugins: [
     CustomPagesPlugin,
@@ -20,7 +20,7 @@ export default defineConfig({
     solidPlugin(),
     tailwindcss(),
     dtsPlugin({
-      include: ['src/components'],
+      include: ['src/leafer-component'],
       outDir: 'leafer-component',
     }),
   ],
@@ -37,20 +37,11 @@ export default defineConfig({
     },
     rollupOptions: {
       external: excludeDeps,
-      input: files,
       output: {
-        entryFileNames: (args) => {
-          return args
-            .facadeModuleId!.replace(
-              '/workspaces/solid-template/src/components/',
-              '',
-            )
-            .replace('tsx', 'js')
-        },
+        // entryFileNames: 'index.js',
         dir: 'leafer-component',
         format: 'es',
         preserveModules: false,
-        // preserveModulesRoot,
       },
     },
   },

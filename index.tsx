@@ -4,6 +4,7 @@ import { render, Suspense, ErrorBoundary } from 'solid-js/web'
 import { RouteDefinition, Router } from '@solidjs/router'
 import routeMap, { type RouteMap } from '~solid-pages'
 import './index.css'
+import './leafer-component'
 
 function getRoutes(): RouteDefinition[] {
   function convertRouteMap(routeMap: RouteMap): RouteDefinition[] {

@@ -2,7 +2,6 @@ import { Component, createResource } from 'solid-js'
 import { A } from '@solidjs/router'
 import { Button } from 'cui-solid'
 import { absoluteCenter } from '@/styles'
-import '@/components/leafer-rect'
 import { cn } from '@/utils/classnames'
 import { sleep } from '@/utils/sleep'
 
@@ -15,6 +14,7 @@ const Page: Component = (props) => {
   })
   return (
     <>
+      <leafer-rect text={`${data()}`}></leafer-rect>
       <Button
         type='primary'
         onClick={refetch}
