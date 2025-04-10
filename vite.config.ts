@@ -8,11 +8,12 @@ import solidPlugin from 'vite-plugin-solid'
 import pkg from './package.json'
 import { CustomPagesPlugin } from './vite.custom-pages-plugin'
 
-const excludeDeps = Object.keys(pkg.dependencies)
-const files = ['box', 'rect'].map(
-  (s) => `src/leafer-component/leafer-${s}/index.tsx`,
-)
-files.push(`src/leafer-component/index.ts`)
+const outDir = 'leafer-component'
+const excludeDeps: any = Object.keys(pkg.dependencies)
+const entry: Record<string, string> = { index: 'src/leafer-component/index.ts' }
+;['box', 'rect'].forEach((s) => {
+  entry[`leafer-${s}/index`] = `src/leafer-component/leafer-${s}/index.tsx`
+})
 export default defineConfig({
   plugins: [
     CustomPagesPlugin,
@@ -21,7 +22,7 @@ export default defineConfig({
     tailwindcss(),
     dtsPlugin({
       include: ['src/leafer-component'],
-      outDir: 'leafer-component',
+      outDir,
     }),
   ],
   server: {
@@ -30,19 +31,14 @@ export default defineConfig({
   },
   build: {
     target: 'esnext',
+    outDir,
     lib: {
-      entry: files,
+      entry,
+      formats: ['es'],
       name: 'LeaferComponent',
-      fileName: 'leafer-component',
     },
     rollupOptions: {
       external: excludeDeps,
-      output: {
-        // entryFileNames: 'index.js',
-        dir: 'leafer-component',
-        format: 'es',
-        preserveModules: false,
-      },
     },
   },
   resolve: {
