@@ -13,5 +13,12 @@
     "README.md": "LICENSE,*.md",
     "vite.config.ts": "vite.*",
     "package.json": "pnpm-lock.yaml,tsconfig.json,.prettierrc,.gitignore,commitlint.config.mjs,.eslintrc.json"
-  }
+  },
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "class:list",
+    ".*[C|c]lass[Name]?"
+  ]
 }
