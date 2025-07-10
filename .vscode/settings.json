@@ -19,6 +19,6 @@
     "className",
     "ngClass",
     "class:list",
-    ".*[Cc]lass(Name)?""
+    ".*[Cc]lass(Name)?"
   ]
 }
